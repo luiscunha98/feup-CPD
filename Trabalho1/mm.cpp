@@ -14,7 +14,7 @@ void printTime(clock_t Time1, clock_t Time2){
 	printf("Time: %3.3f seconds\n", (double)(Time2 - Time1) / CLOCKS_PER_SEC);
 }
 
-//Function that prints the Matrix
+//Function that prints the Matriz
 void printMatrix(double phc[], int m_br){
 	// display 10 elements of the result matrix to verify correctness
 	cout << "Result matrix: " << endl;
@@ -25,7 +25,7 @@ void printMatrix(double phc[], int m_br){
 	cout << endl;
 }
 
- 
+
 void OnMult(int m_ar, int m_br) 
 {
 	
@@ -80,7 +80,7 @@ void OnMult(int m_ar, int m_br)
 	
 }
 
-// Function that add code here for line x line matriz multiplication
+// Function that line x line matriz multiplication
 void OnMultLine(int m_ar, int m_br)
 {
 	SYSTEMTIME Time1, Time2;
@@ -124,7 +124,7 @@ void OnMultLine(int m_ar, int m_br)
 }
 
 
-// add code here for block x block matriz multiplication
+// Function that block x block matriz multiplication
 void OnMultBlock(int m_ar, int m_br, int bkSize)
 {
     SYSTEMTIME Time1, Time2;
@@ -165,7 +165,7 @@ void OnMultBlock(int m_ar, int m_br, int bkSize)
 }
 
 
-
+//Function that prints the papi error
 void handle_error (int retval)
 {
   printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
@@ -185,7 +185,7 @@ void init_papi() {
             << " REVISION: " << PAPI_VERSION_REVISION(retval) << "\n";
 }
 
-
+//Main fucntion
 int main (int argc, char *argv[])
 {
 
