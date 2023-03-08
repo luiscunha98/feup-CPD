@@ -15,7 +15,7 @@ using namespace std;
 #define INC2   2048
 #define ENDDIM2 10240
 
-#define name_file_out "data_results.txt"
+//#define name_file_out "data_results.txt"
 
 FILE *fout;
 
@@ -178,7 +178,7 @@ void OnMultBlock(int m_ar, int m_br, int bkSize)
     Time2 = clock();
 
     sprintf(st,"%d,%3.3f\n",m_ar,(double)(Time2 - Time1) / CLOCKS_PER_SEC);
-    fprintf(fout,"%s",st);
+   // fprintf(fout,"%s",st);
     cout << st;
 
     //printMatrix(phc, m_br);
@@ -218,6 +218,7 @@ int main (int argc, char *argv[])
     long long values[2];
     int start=0;
     int EventSet = PAPI_NULL;
+    int ret;
 
 
     ret = PAPI_library_init( PAPI_VER_CURRENT );
@@ -236,7 +237,7 @@ int main (int argc, char *argv[])
     ret = PAPI_add_event(EventSet,PAPI_L2_DCM);
     if (ret != PAPI_OK) cout << "ERROR: PAPI_L2_DCM" << endl;
 
-    fout= fopen(name_file_out,"w");
+    //fout= fopen(name_file_out,"w");
     op=1;
     do {
         cout << endl << "1. Multiplication" << endl;
@@ -299,7 +300,7 @@ int main (int argc, char *argv[])
                         sprintf(st,"\nChosen option: Block Multiplication->Block size:%d\nMatrix size,time(s)\n",blockSize);
                         cout<<st;
                     }
-                    //OnMultBlock(lin, col, blockSize);
+                    OnMultBlock(lin, col, blockSize);
                     break;
 
             }
