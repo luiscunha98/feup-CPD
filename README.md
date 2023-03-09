@@ -25,11 +25,37 @@ ________________________________________________________________________________
 ## How to use:
 
 ### To run the c++ code:
+- Open the terminal on the same directory as the matrixproduct.cpp (it can be found in the 'sourcecode' directory of this project).
+- Then proceed to run the command:
+```g++ -O2 matrixproduct.cpp -o matrix -lpapi```
+- Once compiled, just run the command:
+```./matrix```
+
+Or
+
+- Open the terminal on the same directory as the matrixproduct.cpp (it can be found in the 'sourcecode' directory of this project).
+- Run the command : 
+```make```
+- Once compiled, just run the command:
+```./matrix```
+
+
+
+
 
 ### To run the java code:
 - Open the terminal on the same directory as the MatrixMultiplication.java (it can be found in the 'sourcecode' directory of this project).
 - Then proceed to run the command:
 ```java MatrixMultiplication.java```
+
+Or
+
+- Open the terminal on the same directory as the MatrixMultiplication.java (it can be found in the 'sourcecode' directory of this project).
+- Run the command : 
+```make```
+- Once compiled, just run the comman:
+``` java MatrixMultiplication```
+
 _________________________________________________________________________________________
 
 ## Important Notes:
