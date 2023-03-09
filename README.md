@@ -41,6 +41,6 @@ ________________________________________________________________________________
 
 ## Requirements
 
-c++ framework
-java framework
-papi
+- c++ framework
+- java framework
+- papi
