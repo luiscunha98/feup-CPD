@@ -34,6 +34,8 @@ ________________________________________________________________________________
 
 ## Important Notes:
 
+C++ results are stored in seconds, while JAVA results and stored in miliseconds
+
 Only the JAVA program has output files after running.
 
 We saved the JAVA results as .txt files to facilitate the import of the data into excel.
