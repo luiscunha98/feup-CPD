@@ -14,6 +14,9 @@ ________________________________________________________________________________
 
 ### C++:
 
+This is a C++ program that performs matrix multiplication using three different algorithms: row-by-column, line-by-line, and block-by-block.
+The program uses the PAPI library to measure the performance of each algorithm in terms of execution time and to acess the DCM (Data Caches Misses for the first two levels). 
+It consists of three main functions OnMult(), OnMultLine(), and OnMultBlock().  When running the program, choosing the desired algorithm and one of the options with the stipulated values, you will be able to obtain the execution time, the matrix output and the attributes provided by PAPI.
 
 
 ### JAVA:
