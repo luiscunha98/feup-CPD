@@ -15,8 +15,6 @@ using namespace std;
 #define INC2   2048
 #define ENDDIM2 10240
 
-//#define name_file_out "data_results.txt"
-
 FILE *fout;
 
 
@@ -45,7 +43,7 @@ void OnMult(int m_ar, int m_br)
 
     for(i=0; i<m_br; i++)
         for(j=0; j<m_br; j++)
-            phb[i*m_br + j] = (double)(i+1); //I don't remember why it's defined like this
+            phb[i*m_br + j] = (double)(i+1); 
 
 
     Time1 = clock();
@@ -62,13 +60,11 @@ void OnMult(int m_ar, int m_br)
             phc[i*m_ar+j]=temp;
         }
     }
-
-
+    
     Time2 = clock();
 
     sprintf(st,"%d,%3.3f\n",m_ar,(double)(Time2 - Time1) / CLOCKS_PER_SEC);
-    fprintf(fout,"%s",st);
-    cout << st; //obv we can comment these out
+    cout << st; 
 
 
     /* cout << "Result matrix: " << endl;
@@ -83,8 +79,6 @@ void OnMult(int m_ar, int m_br)
     free(pha);
     free(phb);
     free(phc);
-
-
 }
 
 // add code here for line x line matriz multiplication
@@ -127,7 +121,6 @@ void OnMultLine(int m_ar, int m_br)
     Time2 = clock();
 
     sprintf(st,"%d,%3.3f\n",m_ar,(double)(Time2 - Time1) / CLOCKS_PER_SEC);
-    fprintf(fout,"%s",st);
     cout << st;
 
     /*cout << "Result matrix: " << endl;
@@ -178,11 +171,8 @@ void OnMultBlock(int m_ar, int m_br, int bkSize)
     Time2 = clock();
 
     sprintf(st,"%d,%3.3f\n",m_ar,(double)(Time2 - Time1) / CLOCKS_PER_SEC);
-   // fprintf(fout,"%s",st);
     cout << st;
-
-    //printMatrix(phc, m_br);
-
+    
     free(pha);
     free(phb);
     free(phc);
@@ -194,7 +184,7 @@ void handle_error (int retval)
     exit(1);
 }
 
-//Is this function useful for us?
+
 void init_papi() {
     int retval = PAPI_library_init(PAPI_VER_CURRENT);
     if (retval != PAPI_VER_CURRENT && retval < 0) {
@@ -215,7 +205,7 @@ int main (int argc, char *argv[])
     char c,st[100];
     int lin, col, blockSize;
     int op,startDim,endDim,inc;
-    long long values[4];
+    long long values[3];
     int start=0;
     int EventSet = PAPI_NULL;
     int ret;
@@ -232,18 +222,15 @@ int main (int argc, char *argv[])
     ret = PAPI_add_event(EventSet,PAPI_TOT_CYC );
     if (ret != PAPI_OK) cout << "ERROR: PAPI_TOT_CYC" << endl;
 
-
-    ret = PAPI_add_event(EventSet,PAPI_L1_DCM );
-    if (ret != PAPI_OK) cout << "ERROR: PAPI_L1_DCM" << endl;
+    ret = PAPI_add_event(EventSet,PAPI_L2_DCA);
+    if (ret != PAPI_OK) cout << "ERROR: PAPI_L2_DCA" << endl;
+    
+    /*ret = PAPI_add_event(EventSet,PAPI_L1_DCM );
+    if (ret != PAPI_OK) cout << "ERROR: PAPI_L1_DCM" << endl;*/
 
     ret = PAPI_add_event(EventSet,PAPI_L2_DCM );
     if (ret != PAPI_OK) cout << "ERROR: PAPI_L2_DCM" << endl;
 
-
-    ret = PAPI_add_event(EventSet,PAPI_L2_DCA);
-    if (ret != PAPI_OK) cout << "ERROR: PAPI_L2_DCA" << endl;
-
-    //fout= fopen(name_file_out,"w");
     op=1;
     do {
         cout << endl << "1. Multiplication" << endl;
@@ -255,7 +242,6 @@ int main (int argc, char *argv[])
             break;
         /* printf("Dimensions: lins=cols ? ");
          cin >> lin;*/
-
 
         cout <<endl << "Starting dimension" << endl;
         cout << "1. 600x600" << endl;
@@ -274,8 +260,6 @@ int main (int argc, char *argv[])
             col=START2;
         }
 
-
-
         while(col<=endDim) {
             lin=col;
             // Start counting
@@ -286,7 +270,6 @@ int main (int argc, char *argv[])
                 case 1:
                     if(!start) {
                         sprintf(st,"\nChosen option: Multiplication\nMatrix size,time(s)\n");
-                        fprintf(fout,"%s",st);
                         cout<<st;
                     }
                     OnMult(lin, col);
@@ -294,7 +277,6 @@ int main (int argc, char *argv[])
                 case 2:
                     if(!start) {
                         sprintf(st,"\nChosen option: Line Multiplication\nMatrix size,time(s)\n");
-                        fprintf(fout,"%s",st);
                         cout<<st;
                     }
                     OnMultLine(lin, col);
@@ -313,10 +295,9 @@ int main (int argc, char *argv[])
             ret = PAPI_stop(EventSet, values);
             if (ret != PAPI_OK) cout << "ERROR: Stop PAPI" << endl;
             printf("TOTAL CYLES: %lld \n", values[0]);
-            printf("L1 DCM: %lld \n", values[1]);
+            printf("L2 DCA: %lld \n", values[1]);
             printf("L2 DCM: %lld \n", values[2]);
-            printf("L2 DCA: %lld \n", values[3]);
-
+            //printf("L1 DCM: %lld \n", values[3]);
             ret = PAPI_reset(EventSet);
             if (ret != PAPI_OK)
                 std::cout << "FAIL reset" << endl;
@@ -330,9 +311,9 @@ int main (int argc, char *argv[])
 
     }while (op != 0);
 
-    ret = PAPI_remove_event( EventSet, PAPI_L1_DCM );
+    /*ret = PAPI_remove_event( EventSet, PAPI_L1_DCM );
     if ( ret != PAPI_OK )
-        std::cout << "FAIL remove event" << endl;
+        std::cout << "FAIL remove event" << endl;*/
     
     ret = PAPI_remove_event( EventSet, PAPI_TOT_CYC );
     if ( ret != PAPI_OK )
