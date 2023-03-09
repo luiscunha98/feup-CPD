@@ -15,9 +15,6 @@ using namespace std;
 #define INC2   2048
 #define ENDDIM2 10240
 
-FILE *fout;
-
-
 #define SYSTEMTIME clock_t
 
 void OnMult(int m_ar, int m_br)
